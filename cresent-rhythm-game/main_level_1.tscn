@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://caro0o3e4r747"]
+
+[ext_resource type="Script" uid="uid://bowbmwob1sqrp" path="res://level.gd" id="1_6epch"]
+[ext_resource type="PackedScene" uid="uid://d0nfjdhj12adf" path="res://player.tscn" id="1_pahdy"]
+[ext_resource type="Script" uid="uid://bi3colyk7g4jf" path="res://copy.gd" id="2_5ba7e"]
+[ext_resource type="Script" uid="uid://cqyqdr4ttd6l7" path="res://levmaptest.gd" id="2_lg6m7"]
+
+[sub_resource type="ConcavePolygonShape2D" id="ConcavePolygonShape2D_6epch"]
+custom_solver_bias = 0.215
+
+[sub_resource type="SystemFont" id="SystemFont_6epch"]
+font_names = PackedStringArray("Agency FB")
+
+[sub_resource type="LabelSettings" id="LabelSettings_snqfj"]
+font = SubResource("SystemFont_6epch")
+font_size = 60
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+shadow_size = 4
+shadow_color = Color(0, 0, 0, 1)
+
+[node name="main level 1" type="Node2D" unique_id=457964561]
+script = ExtResource("1_6epch")
+
+[node name="Line2D" type="Line2D" parent="." unique_id=64794340]
+points = PackedVector2Array(940, 376, 1453, 378, 1695, 186, 2086, 313, 2264, 108)
+joint_mode = 2
+begin_cap_mode = 2
+end_cap_mode = 2
+script = ExtResource("2_lg6m7")
+
+[node name="Area2D" type="Area2D" parent="Line2D" unique_id=456905101]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Line2D/Area2D" unique_id=2048151929]
+shape = SubResource("ConcavePolygonShape2D_6epch")
+script = ExtResource("2_5ba7e")
+
+[node name="player" parent="." unique_id=1651201943 groups=["player"] instance=ExtResource("1_pahdy")]
+position = Vector2(363, 211)
+
+[node name="Control" type="Control" parent="." unique_id=204565908]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="score" type="Label" parent="Control" unique_id=1060009196]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 28.818
+anchor_bottom = 16.321001
+offset_left = 300.0
+offset_top = 2.0
+offset_right = -292.71997
+offset_bottom = -570.84
+grow_horizontal = 2
+text = "0"
+label_settings = SubResource("LabelSettings_snqfj")
+horizontal_alignment = 1
+
+[connection signal="area_shape_entered" from="Line2D/Area2D" to="." method="_on_area_2d_area_shape_entered"]
+[connection signal="area_shape_exited" from="Line2D/Area2D" to="." method="_on_area_2d_area_shape_exited"]
